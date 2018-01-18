@@ -1,4 +1,5 @@
 @students = []
+@centre_width = 75
 @cohorts = [
   :january,
   :february,
@@ -79,7 +80,7 @@ def input_students
     if @students.count == 1
       puts "Now we have 1 student"
     elsif @students.count > 1
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
     end
     # get another name from the user
     name = gets.strip
@@ -88,8 +89,8 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(75)
-  puts "--------------".center(75)
+  puts "The students of Villains Academy".center(@centre_width)
+  puts "--------------".center(@centre_width)
 end
 
 def print_students_list
@@ -97,16 +98,16 @@ def print_students_list
   while count < @students.length
     puts "#{@students[count][:name]} is #{@students[count][:nationality]} and "\
     "he likes #{@students[count][:hobbies]}. He is from the "\
-    "#{@students[count][:cohort]} cohort".center(75)
+    "#{@students[count][:cohort]} cohort".center(@centre_width)
     count += 1
   end
 end
 
 def print_footer
   if @students.count == 1
-    puts "Overall, we have 1 great student".center(75)
+    puts "Overall, we have 1 great student".center(@centre_width)
   elsif
-    puts "Overall, we have #{@students.count} great students".center(75)
+    puts "Overall, we have #{@students.count} great students".center(@centre_width)
   end
 end
 
