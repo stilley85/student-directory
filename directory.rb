@@ -27,22 +27,26 @@ def input_students
     hobbies = gets.chomp
     puts "What cohort does #{name} belong to?"
     cohort = gets.chomp.downcase
-    if cohort == ""
-      cohort = :november
-    else
-      while !cohorts.include?(cohort.to_sym)
-        puts "No such cohort"
-        cohort = gets.chomp.downcase
+    while !cohorts.include?(cohort.to_sym)
+      if cohort == ""
+        cohort = :november
+        break
       end
+      puts "No such cohort"
+      cohort = gets.chomp.downcase
     end
     # add the student hash to the array
     students << {
       name: name,
-      cohort: :november,
+      cohort: cohort,
       nationality: nationality,
       hobbies: hobbies
     }
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have 1 student"
+    elsif students.count > 1
+      puts "Now we have #{students.count} students"
+    end
     # get another name from the user
     name = gets.chomp
   end
@@ -66,7 +70,11 @@ def print(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(75)
+  if names.count == 1
+    puts "Overall, we have 1 great student".center(75)
+  elsif
+    puts "Overall, we have #{names.count} great students".center(75)
+  end
 end
 
 # nothing happens until we call the methods
