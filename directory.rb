@@ -30,10 +30,12 @@ end
 
 def print(students, letter)
   students.each.with_index(1) do |student, index|
-    if letter.empty?
-      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
-    elsif student[:name].downcase.start_with?(letter)
-      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].length < 12
+      if letter.empty?
+        puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
+      elsif student[:name].downcase.start_with?(letter)
+        puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
+      end
     end
   end
 end
