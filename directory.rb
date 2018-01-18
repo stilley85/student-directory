@@ -22,21 +22,11 @@ def print_header
   puts "--------------"
 end
 
-def names_starts_with
-  puts "Choose a letter to search for students with names starting with that letter"
-  puts "Or just hit return to see all students"
-  letter = gets.chomp.downcase
-end
-
-def print(students, letter)
-  students.each.with_index(1) do |student, index|
-    if student[:name].length < 12
-      if letter.empty?
-        puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
-      elsif student[:name].downcase.start_with?(letter)
-        puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
-      end
-    end
+def print(students)
+  count = 0
+  while count < students.length
+    puts "#{students[count][:name]}"
+    count += 1
   end
 end
 
@@ -46,7 +36,6 @@ end
 
 # nothing happens until we call the methods
 students = input_students
-letter = names_starts_with
 print_header
-print(students, letter)
+print(students)
 print_footer(students)
