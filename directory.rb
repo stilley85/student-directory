@@ -7,7 +7,7 @@ def interactive_menu
     selection = gets.chomp
     case selection
       when "1"
-        student = input_students
+        students = input_students
       when "2"
         print_header
         print(students)
