@@ -18,22 +18,22 @@ def input_students
     :december
   ]
   # get the first names
-  name = gets.chomp
+  name = gets.strip
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "What is #{name}'s nationality?"
-    nationality = gets.chomp
+    nationality = gets.strip
     puts "What are #{name}'s hobbies?"
-    hobbies = gets.chomp
+    hobbies = gets.strip
     puts "What cohort does #{name} belong to?"
-    cohort = gets.chomp.downcase
+    cohort = gets.strip.downcase
     while !cohorts.include?(cohort.to_sym)
       if cohort == ""
         cohort = :november
         break
       end
       puts "No such cohort"
-      cohort = gets.chomp.downcase
+      cohort = gets.strip.downcase
     end
     # add the student hash to the array
     students << {
@@ -48,7 +48,7 @@ def input_students
       puts "Now we have #{students.count} students"
     end
     # get another name from the user
-    name = gets.chomp
+    name = gets.strip
   end
   # return the array of input_students
   students
