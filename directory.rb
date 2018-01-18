@@ -3,6 +3,20 @@ def input_students
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
+  cohorts = [
+    :january,
+    :february,
+    :march,
+    :april,
+    :may,
+    :june,
+    :july,
+    :august,
+    :september,
+    :october,
+    :november,
+    :december
+  ]
   # get the first names
   name = gets.chomp
   # while the name is not empty, repeat this code
@@ -11,6 +25,16 @@ def input_students
     nationality = gets.chomp
     puts "What are #{name}'s hobbies?"
     hobbies = gets.chomp
+    puts "What cohort does #{name} belong to?"
+    cohort = gets.chomp.downcase
+    if cohort == ""
+      cohort = :november
+    else
+      while !cohorts.include?(cohort.to_sym)
+        puts "No such cohort"
+        cohort = gets.chomp.downcase
+      end
+    end
     # add the student hash to the array
     students << {
       name: name,
