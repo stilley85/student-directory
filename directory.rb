@@ -1,22 +1,48 @@
+@students = []
+@cohorts = [
+  :january,
+  :february,
+  :march,
+  :april,
+  :may,
+  :june,
+  :july,
+  :august,
+  :september,
+  :october,
+  :november,
+  :december
+]
+
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    selection = gets.chomp
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        print(students)
-        print_footer(students)
-      when "9"
-        exit
-      else
-        puts "I don't know what you meant, try again"
-    end
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+      students = input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
   end
 end
 
@@ -24,21 +50,7 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
-  students = []
-  cohorts = [
-    :january,
-    :february,
-    :march,
-    :april,
-    :may,
-    :june,
-    :july,
-    :august,
-    :september,
-    :october,
-    :november,
-    :december
-  ]
+  @students = []
   # get the first names
   name = gets.strip
   # while the name is not empty, repeat this code
@@ -49,7 +61,7 @@ def input_students
     hobbies = gets.strip
     puts "What cohort does #{name} belong to?"
     cohort = gets.strip.downcase
-    while !cohorts.include?(cohort.to_sym)
+    while !@cohorts.include?(cohort.to_sym)
       if cohort == ""
         cohort = :november
         break
@@ -58,22 +70,21 @@ def input_students
       cohort = gets.strip.downcase
     end
     # add the student hash to the array
-    students << {
+    @students << {
       name: name,
       cohort: cohort,
       nationality: nationality,
       hobbies: hobbies
     }
-    if students.count == 1
+    if @students.count == 1
       puts "Now we have 1 student"
-    elsif students.count > 1
+    elsif @students.count > 1
       puts "Now we have #{students.count} students"
     end
     # get another name from the user
     name = gets.strip
   end
   # return the array of input_students
-  students
 end
 
 def print_header
@@ -81,21 +92,21 @@ def print_header
   puts "--------------".center(75)
 end
 
-def print(students)
+def print_students_list
   count = 0
-  while count < students.length
-    puts "#{students[count][:name]} is #{students[count][:nationality]} and "\
-    "he likes #{students[count][:hobbies]}. He is from the "\
-    "#{students[count][:cohort]} cohort".center(75)
+  while count < @students.length
+    puts "#{@students[count][:name]} is #{@students[count][:nationality]} and "\
+    "he likes #{@students[count][:hobbies]}. He is from the "\
+    "#{@students[count][:cohort]} cohort".center(75)
     count += 1
   end
 end
 
-def print_footer(names)
-  if names.count == 1
+def print_footer
+  if @students.count == 1
     puts "Overall, we have 1 great student".center(75)
   elsif
-    puts "Overall, we have #{names.count} great students".center(75)
+    puts "Overall, we have #{@students.count} great students".center(75)
   end
 end
 
