@@ -81,7 +81,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    push_student_to_array(name, cohort)
   end
   file.close
 end
@@ -94,12 +94,16 @@ def input_students
   while !name.empty? do
     puts "What cohort does #{name} belong to?"
     cohort = check_for_cohort
-    @students << {name: name, cohort: cohort}
+    push_student_to_array(name, cohort)
     puts print_student_count
     # get another name from the user
     puts "Enter another name or hit return to finish"
     name = STDIN.gets.strip.capitalize
   end
+end
+
+def push_student_to_array(name, cohort)
+  @students << {name: name, cohort: cohort}
 end
 
 def check_for_cohort
