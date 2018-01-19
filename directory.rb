@@ -50,42 +50,34 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
-  @students = []
-  # get the first names
-  name = gets.strip
+  name = gets.strip.capitalize
   # while the name is not empty, repeat this code
   while !name.empty? do
-    puts "What is #{name}'s nationality?"
-    nationality = gets.strip
-    puts "What are #{name}'s hobbies?"
-    hobbies = gets.strip
     puts "What cohort does #{name} belong to?"
-    cohort = gets.strip.downcase
-    while !@cohorts.include?(cohort.to_sym)
-      if cohort == ""
-        cohort = :november
-        break
-      end
-      puts "No such cohort"
-      cohort = gets.strip.downcase
-    end
-    # add the student hash to the array
-    @students << {
-      name: name,
-      cohort: cohort,
-      nationality: nationality,
-      hobbies: hobbies
-    }
-    if @students.count == 1
-      puts "Now we have 1 student"
-    elsif @students.count > 1
-      puts "Now we have #{@students.count} students"
-    end
+    cohort = check_for_cohort
+    @students << {name: name, cohort: cohort}
+    puts print_student_count
     # get another name from the user
-    name = gets.strip
+    puts "Enter another name or hit return to finish"
+    name = gets.strip.capitalize
   end
-  # return the array of input_students
+end
+
+def check_for_cohort
+  cohort = gets.strip.downcase.to_sym
+  while !@cohorts.include?(cohort)
+    if cohort == :""
+      cohort = :november
+      break
+    end
+    puts "No such cohort"
+    cohort = gets.strip.downcase.to_sym
+  end
+  cohort
+end
+
+def print_student_count
+  @students.count > 1 ? "Now we have #{@students.count} students" : "Now we have 1 student"
 end
 
 def print_header
@@ -96,9 +88,8 @@ end
 def print_students_list
   count = 0
   while count < @students.length
-    puts "#{@students[count][:name]} is #{@students[count][:nationality]} and "\
-    "he likes #{@students[count][:hobbies]}. He is from the "\
-    "#{@students[count][:cohort]} cohort".center(@centre_width)
+    puts "#{@students[count][:name]} is from the"\
+    " #{@students[count][:cohort].capitalize} cohort".center(@centre_width)
     count += 1
   end
 end
