@@ -15,10 +15,22 @@
   :december
 ]
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -65,8 +77,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -77,7 +89,7 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  name = gets.strip.capitalize
+  name = STDIN.gets.strip.capitalize
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "What cohort does #{name} belong to?"
@@ -86,16 +98,16 @@ def input_students
     puts print_student_count
     # get another name from the user
     puts "Enter another name or hit return to finish"
-    name = gets.strip.capitalize
+    name = STDIN.gets.strip.capitalize
   end
 end
 
 def check_for_cohort
-  cohort = gets.strip.downcase.to_sym
+  cohort = STDIN.gets.strip.downcase.to_sym
   while !@cohorts.include?(cohort)
     return cohort = :november if cohort == :""
     puts "No such cohort"
-    cohort = gets.strip.downcase.to_sym
+    cohort = STDIN.gets.strip.downcase.to_sym
   end
   cohort
 end
@@ -126,4 +138,5 @@ def print_footer
   end
 end
 
+try_load_students
 interactive_menu
